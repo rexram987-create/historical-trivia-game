@@ -62,10 +62,12 @@ function renderQuestion() {
   scoreNode.textContent = score;
   portrait.src = q.image;
   portrait.alt = `דיוקן לזיהוי — שאלה ${index + 1}`;
-  // Do not reveal identifying credits before the player answers.
-  caption.textContent = 'תמונה היסטורית — מקור וקרדיט יוצגו לאחר התשובה';
-  answers.innerHTML = '';
 
+  // Hide the credit area entirely until an answer is submitted.
+  caption.textContent = '';
+  caption.hidden = true;
+
+  answers.innerHTML = '';
   q.options.forEach(option => {
     const button = document.createElement('button');
     button.type = 'button';
@@ -96,8 +98,8 @@ function chooseAnswer(clickedButton, option) {
     feedback.innerHTML = `<strong>לא הפעם ❌</strong><br>התשובה הנכונה היא <b>${q.name}</b>.<br>${q.explanation}`;
   }
 
-  // Reveal the full image credit only after the answer has been submitted.
   caption.textContent = q.source;
+  caption.hidden = false;
   feedback.classList.add('show');
   next.disabled = false;
 }
@@ -131,6 +133,7 @@ playAgain.addEventListener('click', resetGame);
 
 portrait.addEventListener('error', () => {
   caption.textContent = 'לא ניתן לטעון את התמונה כרגע. נסה לרענן את הדף.';
+  caption.hidden = false;
 });
 
 renderQuestion();
