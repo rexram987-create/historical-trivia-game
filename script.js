@@ -62,7 +62,8 @@ function renderQuestion() {
   scoreNode.textContent = score;
   portrait.src = q.image;
   portrait.alt = `דיוקן לזיהוי — שאלה ${index + 1}`;
-  caption.textContent = q.source;
+  // Do not reveal identifying credits before the player answers.
+  caption.textContent = 'תמונה היסטורית — מקור וקרדיט יוצגו לאחר התשובה';
   answers.innerHTML = '';
 
   q.options.forEach(option => {
@@ -95,6 +96,8 @@ function chooseAnswer(clickedButton, option) {
     feedback.innerHTML = `<strong>לא הפעם ❌</strong><br>התשובה הנכונה היא <b>${q.name}</b>.<br>${q.explanation}`;
   }
 
+  // Reveal the full image credit only after the answer has been submitted.
+  caption.textContent = q.source;
   feedback.classList.add('show');
   next.disabled = false;
 }
