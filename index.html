@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>טריוויה היסטורית מצוירת</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <main class="wrap">
@@ -14,11 +14,40 @@
       <p>זהו את הדמות שבתמונה, צברו נקודות וקראו הסבר קצר אחרי כל תשובה.</p>
     </header>
 
-    <section id="game" class="card">
+    <section id="setup" class="card setup-card">
+      <h2>בחרו מצב משחק</h2>
+      <div class="setup-grid">
+        <label>
+          <span>קטגוריה</span>
+          <select id="categorySelect">
+            <option value="all">כל הקטגוריות</option>
+            <option value="מנהיגים ומדינאים">מנהיגים ומדינאים</option>
+            <option value="מלוכה ואימפריות">מלוכה ואימפריות</option>
+            <option value="מדע והגות">מדע והגות</option>
+            <option value="העת העתיקה">העת העתיקה</option>
+          </select>
+        </label>
+        <label>
+          <span>רמת קושי</span>
+          <select id="difficultySelect">
+            <option value="all">כל הרמות</option>
+            <option value="קל">קל</option>
+            <option value="בינוני">בינוני</option>
+            <option value="קשה">קשה</option>
+          </select>
+        </label>
+      </div>
+      <button id="startGame" class="primary wide">התחל משחק</button>
+      <p id="setupMessage" class="setup-message" aria-live="polite"></p>
+    </section>
+
+    <section id="game" class="card hidden">
       <div class="topbar">
-        <span>שאלה <strong id="questionNumber">1</strong> מתוך <strong id="totalQuestions">4</strong></span>
+        <span>שאלה <strong id="questionNumber">1</strong> מתוך <strong id="totalQuestions">10</strong></span>
         <span>ניקוד: <strong id="score">0</strong></span>
       </div>
+
+      <div class="tags"><span id="categoryTag"></span><span id="difficultyTag"></span></div>
 
       <figure class="portrait-frame">
         <img id="portrait" alt="דיוקן היסטורי לזיהוי" loading="eager">
@@ -30,7 +59,7 @@
       <div id="feedback" class="feedback" aria-live="polite"></div>
 
       <div class="actions">
-        <button id="restart" class="secondary">התחל מחדש</button>
+        <button id="restart" class="secondary">חזרה לבחירה</button>
         <button id="next" class="primary" disabled>לשאלה הבאה</button>
       </div>
     </section>
@@ -46,6 +75,6 @@
       התמונות נבחרו ממאגר Wikimedia Commons ומוצגות בהתאם לתנאי הרישוי המופיעים בדפי המקור.
     </footer>
   </main>
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
