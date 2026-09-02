@@ -32,6 +32,53 @@ const questions = [
 let index = 0;
 let score = 0;
 let answered = false;
+let audioContext = null;
+
+function getAudioContext() {
+  if (!audioContext) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (AudioCtx) audioContext = new AudioCtx();
+  }
+  return audioContext;
+}
+
+function playTone(frequency, startTime, duration, type = 'sine', volume = 0.12) {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const oscillator = ctx.createOscillator();
+  const gain = ctx.createGain();
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency, startTime);
+  gain.gain.setValueAtTime(0.0001, startTime);
+  gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+  oscillator.connect(gain);
+  gain.connect(ctx.destination);
+  oscillator.start(startTime);
+  oscillator.stop(startTime + duration + 0.02);
+}
+
+function playCorrectSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') ctx.resume();
+  const now = ctx.currentTime + 0.02;
+  // Bright, ascending TV-quiz style chime.
+  playTone(523.25, now, 0.16, 'triangle', 0.11);
+  playTone(659.25, now + 0.12, 0.16, 'triangle', 0.11);
+  playTone(783.99, now + 0.24, 0.30, 'triangle', 0.13);
+}
+
+function playWrongSound() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') ctx.resume();
+  const now = ctx.currentTime + 0.02;
+  // Short descending buzzer-like cue.
+  playTone(220, now, 0.22, 'sawtooth', 0.07);
+  playTone(164.81, now + 0.16, 0.34, 'sawtooth', 0.06);
+}
 
 const game = document.getElementById('game');
 const result = document.getElementById('result');
@@ -63,7 +110,6 @@ function renderQuestion() {
   portrait.src = q.image;
   portrait.alt = `דיוקן לזיהוי — שאלה ${index + 1}`;
 
-  // Hide the credit area entirely until an answer is submitted.
   caption.textContent = '';
   caption.hidden = true;
 
@@ -92,9 +138,11 @@ function chooseAnswer(clickedButton, option) {
   if (option === q.name) {
     score++;
     scoreNode.textContent = score;
+    playCorrectSound();
     feedback.innerHTML = `<strong>נכון! ✅</strong><br>${q.explanation}`;
   } else {
     clickedButton.classList.add('wrong');
+    playWrongSound();
     feedback.innerHTML = `<strong>לא הפעם ❌</strong><br>התשובה הנכונה היא <b>${q.name}</b>.<br>${q.explanation}`;
   }
 
