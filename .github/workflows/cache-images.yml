@@ -14,59 +14,45 @@ jobs:
   cache-images:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Download portraits
         run: |
           set -e
           mkdir -p images
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Jacques-Louis%20David%20-%20The%20Emperor%20Napoleon%20in%20His%20Study%20at%20the%20Tuileries%20-%20Google%20Art%20Project%202.jpg?width=900' \
-            -o images/napoleon.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Melchior%20Lorck%20Sultan%20Suleiman.jpg?width=900' \
-            -o images/suleiman.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://upload.wikimedia.org/wikipedia/commons/1/10/Theodor_Herzl_portrait.jpg' \
-            -o images/herzl.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://upload.wikimedia.org/wikipedia/commons/b/b9/Abraham_Lincoln_standing_portrait_1863.jpg' \
-            -o images/lincoln.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Head%20and%20shoulders%20crop%20of%20George%20Washington%20as%20President%20in%201796%20painted%20by%20Gilbert%20Stuart.jpg?width=900' \
-            -o images/washington.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Portrait%20of%20Queen%20Victoria.jpg?width=900' \
-            -o images/victoria.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Portrait%20of%20Marie%20Curie.jpg?width=900' \
-            -o images/curie.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sir%20Isaac%20Newton%20by%20Sir%20Godfrey%20Kneller%2C%20Bt.jpg?width=900' \
-            -o images/newton.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Elizabeth%20I%20of%20England%20-%20coronation%20portrait.jpg?width=900' \
-            -o images/elizabeth1.jpg
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
-            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Julius%20Caesar.jpg?width=900' \
-            -o images/caesar.jpg
-
-      - name: Verify files
-        run: |
-          for f in napoleon suleiman herzl lincoln washington victoria curie newton elizabeth1 caesar; do
-            test -s "images/$f.jpg"
-          done
-          file images/*
-
-      - name: Commit portraits to repository
+          get(){ curl -L --fail --retry 3 -A 'Mozilla/5.0' "https://commons.wikimedia.org/wiki/Special:Redirect/file/$1?width=900" -o "images/$2"; }
+          get 'Jacques-Louis%20David%20-%20The%20Emperor%20Napoleon%20in%20His%20Study%20at%20the%20Tuileries%20-%20Google%20Art%20Project%202.jpg' napoleon.jpg
+          get 'Melchior%20Lorck%20Sultan%20Suleiman.jpg' suleiman.jpg
+          get 'Theodor%20Herzl%20portrait.jpg' herzl.jpg
+          get 'Abraham%20Lincoln%20standing%20portrait%201863.jpg' lincoln.jpg
+          get 'Head%20and%20shoulders%20crop%20of%20George%20Washington%20as%20President%20in%201796%20painted%20by%20Gilbert%20Stuart.jpg' washington.jpg
+          get 'Portrait%20of%20Queen%20Victoria.jpg' victoria.jpg
+          get 'Portrait%20of%20Marie%20Curie.jpg' curie.jpg
+          get 'Sir%20Isaac%20Newton%20by%20Sir%20Godfrey%20Kneller%2C%20Bt.jpg' newton.jpg
+          get 'Elizabeth%20I%20of%20England%20-%20coronation%20portrait.jpg' elizabeth1.jpg
+          get 'Julius%20Caesar.jpg' caesar.jpg
+          get 'Charles%20Darwin%20portrait.jpg' darwin.jpg
+          get 'Alexander%20Graham%20Bell.jpg' bell.jpg
+          get 'Florence%20Nightingale.jpg' nightingale.jpg
+          get 'David%20Ben%20Gurion.jpg' bengurion.jpg
+          get 'Golda%20Meir.jpg' golda.jpg
+          get 'Peter%20the%20Great.jpg' peter.jpg
+          get 'Bust%20of%20Socrates.JPG' socrates.jpg
+          get 'Plato%20bust.png' plato.png
+          get 'Galileo%20Galilei%2C%20by%20Justus%20Sustermans.jpg' galileo.jpg
+          get 'Nikola%20Tesla%2C%20with%20his%20equipment%20EDIT.jpg' tesla.jpg
+          get 'Leonardo%20da%20Vinci%20-%20presumed%20self-portrait%20-%20WGA12798.jpg' leonardo.jpg
+          get 'Louis%20XIV%20of%20France.jpg' louis14.jpg
+          get 'Catherine%20II%20by%20J.B.Lampi%20%281790s%2C%20Kunsthistorisches%20Museum%29.jpg' catherine.jpg
+          get 'Augustus%20of%20Prima%20Porta%20%28inv.%202290%29.jpg' augustus.jpg
+          get 'Marcus%20Aurelius%20Metropolitan%20Museum.png' aurelius.png
+          get 'Otto%20von%20Bismarck%20portrait.jpg' bismarck.jpg
+          get 'Mahatma-Gandhi%2C%20studio%2C%201931.jpg' gandhi.jpg
+          get 'Joan%20of%20Arc%2C%20miniature%20graded.jpg' joan.jpg
+          get 'Albert%20Einstein%20Head.jpg' einstein.jpg
+          get 'Winston%20Churchill%2C%20three-quarter%20length%20portrait%2C%20seated%2C%20facing%20right%20LCCN89706419.jpg' churchill.jpg
+      - name: Commit portraits
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add images
-          if git diff --cached --quiet; then
-            echo 'No image changes to commit.'
-          else
-            git commit -m 'Cache ten historical portraits locally'
-            git push
-          fi
+          if git diff --cached --quiet; then echo 'No changes'; else git commit -m 'Cache portraits for 30-figure trivia set'; git push; fi
