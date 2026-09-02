@@ -1,0 +1,55 @@
+name: Cache Wikimedia portraits
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cache-images.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cache-images:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download portraits
+        run: |
+          set -e
+          mkdir -p images
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Jacques-Louis%20David%20-%20The%20Emperor%20Napoleon%20in%20His%20Study%20at%20the%20Tuileries%20-%20Google%20Art%20Project%202.jpg?width=900' \
+            -o images/napoleon.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Melchior%20Lorck%20Sultan%20Suleiman.jpg?width=900' \
+            -o images/suleiman.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://upload.wikimedia.org/wikipedia/commons/1/10/Theodor_Herzl_portrait.jpg' \
+            -o images/herzl.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://upload.wikimedia.org/wikipedia/commons/b/b9/Abraham_Lincoln_standing_portrait_1863.jpg' \
+            -o images/lincoln.jpg
+
+      - name: Verify files
+        run: |
+          test -s images/napoleon.jpg
+          test -s images/suleiman.jpg
+          test -s images/herzl.jpg
+          test -s images/lincoln.jpg
+          file images/*
+
+      - name: Commit portraits to repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add images
+          if git diff --cached --quiet; then
+            echo 'No image changes to commit.'
+          else
+            git commit -m 'Cache historical portraits locally'
+            git push
+          fi
