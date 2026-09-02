@@ -33,13 +33,30 @@ jobs:
           curl -L --fail --retry 3 -A 'Mozilla/5.0' \
             'https://upload.wikimedia.org/wikipedia/commons/b/b9/Abraham_Lincoln_standing_portrait_1863.jpg' \
             -o images/lincoln.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Head%20and%20shoulders%20crop%20of%20George%20Washington%20as%20President%20in%201796%20painted%20by%20Gilbert%20Stuart.jpg?width=900' \
+            -o images/washington.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Portrait%20of%20Queen%20Victoria.jpg?width=900' \
+            -o images/victoria.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Portrait%20of%20Marie%20Curie.jpg?width=900' \
+            -o images/curie.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Sir%20Isaac%20Newton%20by%20Sir%20Godfrey%20Kneller%2C%20Bt.jpg?width=900' \
+            -o images/newton.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Elizabeth%20I%20of%20England%20-%20coronation%20portrait.jpg?width=900' \
+            -o images/elizabeth1.jpg
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' \
+            'https://commons.wikimedia.org/wiki/Special:Redirect/file/Julius%20Caesar.jpg?width=900' \
+            -o images/caesar.jpg
 
       - name: Verify files
         run: |
-          test -s images/napoleon.jpg
-          test -s images/suleiman.jpg
-          test -s images/herzl.jpg
-          test -s images/lincoln.jpg
+          for f in napoleon suleiman herzl lincoln washington victoria curie newton elizabeth1 caesar; do
+            test -s "images/$f.jpg"
+          done
           file images/*
 
       - name: Commit portraits to repository
@@ -50,6 +67,6 @@ jobs:
           if git diff --cached --quiet; then
             echo 'No image changes to commit.'
           else
-            git commit -m 'Cache historical portraits locally'
+            git commit -m 'Cache ten historical portraits locally'
             git push
           fi
