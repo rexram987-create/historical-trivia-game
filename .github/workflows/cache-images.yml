@@ -38,7 +38,7 @@ jobs:
           get 'Peter%20the%20Great.jpg' peter.jpg
           get 'Bust%20of%20Socrates.JPG' socrates.jpg
           get 'Plato%20bust.png' plato.png
-          get 'Galileo%20Galilei%2C%20by%20Justus%20Sustermans.jpg' galileo.jpg
+          get 'Galileo-sustermans.jpg' galileo.jpg
           get 'Nikola%20Tesla%2C%20with%20his%20equipment%20EDIT.jpg' tesla.jpg
           get 'Leonardo%20da%20Vinci%20-%20presumed%20self-portrait%20-%20WGA12798.jpg' leonardo.jpg
           get 'Louis%20XIV%20of%20France.jpg' louis14.jpg
