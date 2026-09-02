@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>טריוויה היסטורית מצוירת</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow">משחק זיהוי דמויות</p>
+      <h1>טריוויה היסטורית מצוירת</h1>
+      <p>זהו את הדמות שבתמונה, צברו נקודות וקראו הסבר קצר אחרי כל תשובה.</p>
+    </header>
+
+    <section id="game" class="card">
+      <div class="topbar">
+        <span>שאלה <strong id="questionNumber">1</strong> מתוך <strong id="totalQuestions">4</strong></span>
+        <span>ניקוד: <strong id="score">0</strong></span>
+      </div>
+
+      <figure class="portrait-frame">
+        <img id="portrait" alt="דיוקן היסטורי לזיהוי" loading="eager">
+        <figcaption id="sourceCaption"></figcaption>
+      </figure>
+
+      <h2>מי הדמות ההיסטורית שבתמונה?</h2>
+      <div id="answers" class="answers"></div>
+      <div id="feedback" class="feedback" aria-live="polite"></div>
+
+      <div class="actions">
+        <button id="restart" class="secondary">התחל מחדש</button>
+        <button id="next" class="primary" disabled>לשאלה הבאה</button>
+      </div>
+    </section>
+
+    <section id="result" class="card result hidden">
+      <div class="result-icon">🏛️</div>
+      <h2>סיימת את המשחק!</h2>
+      <p>הניקוד שלך: <strong id="finalScore"></strong> מתוך <strong id="finalTotal"></strong></p>
+      <button id="playAgain" class="primary">שחק שוב</button>
+    </section>
+
+    <footer>
+      התמונות נבחרו ממאגר Wikimedia Commons ומוצגות בהתאם לתנאי הרישוי המופיעים בדפי המקור.
+    </footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
