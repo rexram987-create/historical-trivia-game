@@ -42,7 +42,7 @@ jobs:
           get 'Nikola%20Tesla%2C%20with%20his%20equipment%20EDIT.jpg' tesla.jpg
           get 'Leonardo%20da%20Vinci%20-%20presumed%20self-portrait%20-%20WGA12798.jpg' leonardo.jpg
           get 'Louis%20XIV%20of%20France.jpg' louis14.jpg
-          get 'Catherine%20II%20by%20J.B.Lampi%20%281790s%2C%20Kunsthistorisches%20Museum%29.jpg' catherine.jpg
+          get 'Catherine%20II%20by%20J.B.Lampi%20%281793%2C%20Hermitage%29.jpg' catherine.jpg
           get 'Augustus%20of%20Prima%20Porta%20%28inv.%202290%29.jpg' augustus.jpg
           get 'Marcus%20Aurelius%20Metropolitan%20Museum.png' aurelius.png
           get 'Otto%20von%20Bismarck%20portrait.jpg' bismarck.jpg
