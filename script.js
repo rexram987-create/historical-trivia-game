@@ -18,9 +18,29 @@ function playTone(f,s,d,t='sine',v=.12){const c=getAudioContext();if(!c)return;c
 function playCorrectSound(){const c=getAudioContext();if(!c)return;if(c.state==='suspended')c.resume();const n=c.currentTime+.02;playTone(523.25,n,.16,'triangle',.11);playTone(659.25,n+.12,.16,'triangle',.11);playTone(783.99,n+.24,.30,'triangle',.13);}
 function playWrongSound(){const c=getAudioContext();if(!c)return;if(c.state==='suspended')c.resume();const n=c.currentTime+.02;playTone(220,n,.22,'sawtooth',.07);playTone(164.81,n+.16,.34,'sawtooth',.06);}
 const setup=document.getElementById('setup'),game=document.getElementById('game'),result=document.getElementById('result'),categorySelect=document.getElementById('categorySelect'),difficultySelect=document.getElementById('difficultySelect'),setupMessage=document.getElementById('setupMessage'),startGameButton=document.getElementById('startGame'),portrait=document.getElementById('portrait'),caption=document.getElementById('sourceCaption'),answers=document.getElementById('answers'),feedback=document.getElementById('feedback'),next=document.getElementById('next'),restart=document.getElementById('restart'),playAgain=document.getElementById('playAgain'),questionNumber=document.getElementById('questionNumber'),totalQuestions=document.getElementById('totalQuestions'),scoreNode=document.getElementById('score'),finalScore=document.getElementById('finalScore'),finalTotal=document.getElementById('finalTotal'),categoryTag=document.getElementById('categoryTag'),difficultyTag=document.getElementById('difficultyTag');
-function startGame(){const cat=categorySelect.value,diff=difficultySelect.value;const filtered=questions.filter(q=>(cat==='all'||q.categories.includes(cat))&&(diff==='all'||q.difficulty===diff));if(!filtered.length){setupMessage.textContent='אין כרגע שאלות בשילוב הזה. בחרו "כל הרמות" או רמת קושי אחרת.';return;}setupMessage.textContent='';activeQuestions=shuffle(filtered);index=0;score=0;setup.classList.add('hidden');result.classList.add('hidden');game.classList.remove('hidden');totalQuestions.textContent=activeQuestions.length;finalTotal.textContent=activeQuestions.length;renderQuestion();}
+
+function updateDifficultyOptions(){
+  const cat=categorySelect.value;
+  const availableQuestions=questions.filter(q=>cat==='all'||q.categories.includes(cat));
+  const available=new Set(availableQuestions.map(q=>q.difficulty));
+  const previous=difficultySelect.value;
+  difficultySelect.innerHTML='<option value="all">כל הרמות</option>';
+  ['קל','בינוני','קשה'].forEach(level=>{
+    if(available.has(level)){
+      const option=document.createElement('option');
+      option.value=level;
+      option.textContent=level;
+      difficultySelect.appendChild(option);
+    }
+  });
+  difficultySelect.value=available.has(previous)?previous:'all';
+  setupMessage.textContent='';
+}
+
+function startGame(){const cat=categorySelect.value,diff=difficultySelect.value;const filtered=questions.filter(q=>(cat==='all'||q.categories.includes(cat))&&(diff==='all'||q.difficulty===diff));if(!filtered.length){setupMessage.textContent='אין כרגע שאלות בשילוב הזה.';return;}setupMessage.textContent='';activeQuestions=shuffle(filtered);index=0;score=0;setup.classList.add('hidden');result.classList.add('hidden');game.classList.remove('hidden');totalQuestions.textContent=activeQuestions.length;finalTotal.textContent=activeQuestions.length;renderQuestion();}
 function renderQuestion(){answered=false;next.disabled=true;feedback.className='feedback';feedback.textContent='';const q=activeQuestions[index];questionNumber.textContent=index+1;scoreNode.textContent=score;portrait.src=q.image;portrait.alt=`דיוקן לזיהוי — שאלה ${index+1}`;caption.textContent='';caption.hidden=true;categoryTag.textContent=q.categories.join(' · ');difficultyTag.textContent=`רמה: ${q.difficulty}`;answers.innerHTML='';shuffle(q.options).forEach(option=>{const b=document.createElement('button');b.type='button';b.textContent=option;b.addEventListener('click',()=>chooseAnswer(b,option));answers.appendChild(b);});next.textContent=index===activeQuestions.length-1?'לתוצאה':'לשאלה הבאה';}
 function chooseAnswer(clickedButton,option){if(answered)return;answered=true;const q=activeQuestions[index];[...answers.children].forEach(b=>{b.disabled=true;if(b.textContent===q.name)b.classList.add('correct');});if(option===q.name){score++;scoreNode.textContent=score;playCorrectSound();feedback.innerHTML=`<strong>נכון! ✅</strong><br>${q.explanation}`;}else{clickedButton.classList.add('wrong');playWrongSound();feedback.innerHTML=`<strong>לא הפעם ❌</strong><br>התשובה הנכונה היא <b>${q.name}</b>.<br>${q.explanation}`;}caption.textContent=q.source;caption.hidden=false;feedback.classList.add('show');next.disabled=false;}
 function showResult(){game.classList.add('hidden');result.classList.remove('hidden');finalScore.textContent=score;}
-function backToSetup(){game.classList.add('hidden');result.classList.add('hidden');setup.classList.remove('hidden');setupMessage.textContent='';}
-next.addEventListener('click',()=>{if(!answered)return;if(index<activeQuestions.length-1){index++;renderQuestion();}else showResult();});restart.addEventListener('click',backToSetup);playAgain.addEventListener('click',backToSetup);startGameButton.addEventListener('click',startGame);portrait.addEventListener('error',()=>{caption.textContent='לא ניתן לטעון את התמונה כרגע. נסה לרענן את הדף.';caption.hidden=false;});
+function backToSetup(){game.classList.add('hidden');result.classList.add('hidden');setup.classList.remove('hidden');setupMessage.textContent='';updateDifficultyOptions();}
+next.addEventListener('click',()=>{if(!answered)return;if(index<activeQuestions.length-1){index++;renderQuestion();}else showResult();});restart.addEventListener('click',backToSetup);playAgain.addEventListener('click',backToSetup);startGameButton.addEventListener('click',startGame);categorySelect.addEventListener('change',updateDifficultyOptions);portrait.addEventListener('error',()=>{caption.textContent='לא ניתן לטעון את התמונה כרגע. נסה לרענן את הדף.';caption.hidden=false;});
+updateDifficultyOptions();
