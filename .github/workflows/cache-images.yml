@@ -17,9 +17,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download portraits
         run: |
-          set -e
           mkdir -p images
-          get(){ curl -L --fail --retry 3 -A 'Mozilla/5.0' "https://commons.wikimedia.org/wiki/Special:Redirect/file/$1?width=900" -o "images/$2"; }
+          get(){
+            if curl -L --fail --retry 3 -A 'Mozilla/5.0' "https://commons.wikimedia.org/wiki/Special:Redirect/file/$1?width=900" -o "images/$2"; then
+              echo "Downloaded $2"
+            else
+              echo "::warning::Failed to download $2"
+              rm -f "images/$2"
+            fi
+          }
           get 'Jacques-Louis%20David%20-%20The%20Emperor%20Napoleon%20in%20His%20Study%20at%20the%20Tuileries%20-%20Google%20Art%20Project%202.jpg' napoleon.jpg
           get 'Melchior%20Lorck%20Sultan%20Suleiman.jpg' suleiman.jpg
           get 'Theodor%20Herzl%20portrait.jpg' herzl.jpg
@@ -50,8 +56,9 @@ jobs:
           get 'Joan%20of%20Arc%20miniature%20graded.jpg' joan.jpg
           get 'Albert%20Einstein%20Portrait%20%281930%29.jpg' einstein.jpg
       - name: Commit portraits
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add images
-          if git diff --cached --quiet; then echo 'No changes'; else git commit -m 'Cache portraits for 29-figure trivia set'; git push; fi
+          if git diff --cached --quiet; then echo 'No changes'; else git commit -m 'Cache available portraits for trivia set'; git push; fi
