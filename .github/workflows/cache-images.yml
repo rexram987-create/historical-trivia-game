@@ -46,7 +46,7 @@ jobs:
           get 'Augustus%20of%20Prima%20Porta%20%28inv.%202290%29.jpg' augustus.jpg
           get 'Marcus%20Aurelius%20Metropolitan%20Museum.png' aurelius.png
           get 'Otto%20von%20Bismarck%20portrait.jpg' bismarck.jpg
-          get 'Mahatma-Gandhi%2C%20studio%2C%201931.jpg' gandhi.jpg
+          get 'Gandhi%20portrait%201931.jpg' gandhi.jpg
           get 'Joan%20of%20Arc%2C%20miniature%20graded.jpg' joan.jpg
           get 'Albert%20Einstein%20Head.jpg' einstein.jpg
           get 'Winston%20Churchill%2C%20three-quarter%20length%20portrait%2C%20seated%2C%20facing%20right%20LCCN89706419.jpg' churchill.jpg
