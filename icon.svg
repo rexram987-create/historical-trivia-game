@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="טריוויה היסטורית">
+  <rect width="512" height="512" rx="112" fill="#8f4f3f"/>
+  <circle cx="256" cy="256" r="170" fill="#f5efe5"/>
+  <path d="M142 214h228l-114-82-114 82Zm28 28v110h40V242h-40Zm66 0v110h40V242h-40Zm66 0v110h40V242h-40Zm-154 138h216v34H148v-34Z" fill="#8f4f3f"/>
+  <circle cx="256" cy="182" r="18" fill="#8f4f3f"/>
+</svg>
