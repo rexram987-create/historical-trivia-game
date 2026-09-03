@@ -48,7 +48,7 @@ jobs:
           get 'Otto%20von%20Bismarck%20portrait.jpg' bismarck.jpg
           get 'Gandhi%20portrait%201931.jpg' gandhi.jpg
           get 'Joan%20of%20Arc%20miniature%20graded.jpg' joan.jpg
-          get 'Albert%20Einstein%20Head.jpg' einstein.jpg
+          get 'Albert%20Einstein%20Portrait%20%281930%29.jpg' einstein.jpg
           get 'Winston%20Churchill%2C%20three-quarter%20length%20portrait%2C%20seated%2C%20facing%20right%20LCCN89706419.jpg' churchill.jpg
       - name: Commit portraits
         run: |
