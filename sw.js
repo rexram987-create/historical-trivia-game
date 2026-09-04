@@ -1,9 +1,9 @@
-const CACHE_NAME = 'historical-trivia-v2';
+const CACHE_NAME = 'historical-trivia-v3';
 const APP_SHELL = [
   './',
   './index.html',
   './style.css?v=5',
-  './script.js?v=9',
+  './script.js?v=10',
   './manifest.webmanifest',
   './icon.svg',
   './images/napoleon.jpg',
