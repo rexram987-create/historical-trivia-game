@@ -22,7 +22,7 @@
 <div class="setup-grid">
 <label><span>סוג שאלות</span><select id="typeSelect"><option value="all">הכול — ערבוב שאלות</option><option value="portrait">זהה את הדמות</option><option value="knowledge">ידע היסטורי</option><option value="date">שנים ותאריכים</option><option value="earlier">מה קרה קודם?</option><option value="truefalse">נכון או לא נכון</option></select></label>
 <label><span>קטגוריה</span><select id="categorySelect"><option value="all">כל הקטגוריות</option><option value="מנהיגים ומדינאים">מנהיגים ומדינאים</option><option value="מלוכה ואימפריות">מלוכה ואימפריות</option><option value="מדע והגות">מדע והגות</option><option value="העת העתיקה">העת העתיקה</option></select></label>
-<label><span>רמת קושי</span><select id="difficultySelect"><option value="all">כל הרמות</option><option value="קל">קל</option><option value="בינוני">בינוני</option><option value="קשה">קשה</option></select></label>
+<label><span>רמת קושי</span><select id="difficultySelect"><option value="all">כל הרמות</option><option value="קל">קל</option><option value="בינוני">בינוני</option><option value="קשה">קשה</option></select></label>\n<label><span>מספר שאלות</span><select id="countSelect"><option value="10">10 שאלות</option><option value="20">20 שאלות</option><option value="30">30 שאלות</option><option value="all">כל השאלות</option></select></label>
 </div>
 <button id="startGame" class="primary wide">התחל משחק</button><p id="setupMessage" class="setup-message" aria-live="polite"></p>
 </section>
@@ -36,6 +36,6 @@
 <section id="result" class="card result hidden"><div class="result-icon">🏛️</div><h2>סיימת את המשחק!</h2><p>הניקוד שלך: <strong id="finalScore"></strong> מתוך <strong id="finalTotal"></strong></p><button id="playAgain" class="primary">שחק שוב</button></section>
 <footer>התמונות נבחרו ממאגר Wikimedia Commons ומוצגות בהתאם לתנאי הרישוי המופיעים בדפי המקור.</footer>
 </main>
-<script src="script.js?v=9"></script>
+<script src="script.js?v=10"></script>
 <script>if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));}</script>
 </body></html>
