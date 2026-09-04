@@ -8,40 +8,34 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="טריוויה היסטורית">
-  <title>טריוויה היסטורית מצוירת</title>
+  <title>טריוויה היסטורית</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
-  <main class="wrap">
-    <header class="hero"><p class="eyebrow">משחק זיהוי דמויות</p><h1>טריוויה היסטורית מצוירת</h1><p>זהו את הדמות שבתמונה, צברו נקודות וקראו הסבר קצר אחרי כל תשובה.</p></header>
-    <section id="setup" class="card setup-card">
-      <h2>בחרו מצב משחק</h2>
-      <div class="setup-grid">
-        <label><span>קטגוריה</span><select id="categorySelect"><option value="all">כל הקטגוריות</option><option value="מנהיגים ומדינאים">מנהיגים ומדינאים</option><option value="מלוכה ואימפריות">מלוכה ואימפריות</option><option value="מדע והגות">מדע והגות</option><option value="העת העתיקה">העת העתיקה</option></select></label>
-        <label><span>רמת קושי</span><select id="difficultySelect"><option value="all">כל הרמות</option><option value="קל">קל</option><option value="בינוני">בינוני</option><option value="קשה">קשה</option></select></label>
-      </div>
-      <button id="startGame" class="primary wide">התחל משחק</button><p id="setupMessage" class="setup-message" aria-live="polite"></p>
-    </section>
-    <section id="game" class="card hidden">
-      <div class="topbar"><span>שאלה <strong id="questionNumber">1</strong> מתוך <strong id="totalQuestions">29</strong></span><span>ניקוד: <strong id="score">0</strong></span></div>
-      <div class="tags"><span id="categoryTag"></span><span id="difficultyTag"></span></div>
-      <figure class="portrait-frame"><img id="portrait" alt="דיוקן היסטורי לזיהוי" loading="eager"><figcaption id="sourceCaption" hidden></figcaption></figure>
-      <h2>מי הדמות ההיסטורית שבתמונה?</h2><div id="answers" class="answers"></div><div id="feedback" class="feedback" aria-live="polite"></div>
-      <div class="actions"><button id="restart" class="secondary">חזרה לבחירה</button><button id="next" class="primary" disabled>לשאלה הבאה</button></div>
-    </section>
-    <section id="result" class="card result hidden"><div class="result-icon">🏛️</div><h2>סיימת את המשחק!</h2><p>הניקוד שלך: <strong id="finalScore"></strong> מתוך <strong id="finalTotal"></strong></p><button id="playAgain" class="primary">שחק שוב</button></section>
-    <footer>התמונות נבחרו ממאגר Wikimedia Commons ומוצגות בהתאם לתנאי הרישוי המופיעים בדפי המקור.</footer>
-  </main>
-  <script src="script.js?v=8"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(error => console.error('Service worker registration failed:', error));
-      });
-    }
-  </script>
-</body>
-</html>
+<main class="wrap">
+<header class="hero"><p class="eyebrow">משחק טריוויה היסטורי</p><h1>טריוויה היסטורית</h1><p>זהו דמויות, ענו על שאלות ידע, תאריכים, סדר כרונולוגי ונכון או לא נכון.</p></header>
+<section id="setup" class="card setup-card">
+<h2>בחרו מצב משחק</h2>
+<div class="setup-grid">
+<label><span>סוג שאלות</span><select id="typeSelect"><option value="all">הכול — ערבוב שאלות</option><option value="portrait">זהה את הדמות</option><option value="knowledge">ידע היסטורי</option><option value="date">שנים ותאריכים</option><option value="earlier">מה קרה קודם?</option><option value="truefalse">נכון או לא נכון</option></select></label>
+<label><span>קטגוריה</span><select id="categorySelect"><option value="all">כל הקטגוריות</option><option value="מנהיגים ומדינאים">מנהיגים ומדינאים</option><option value="מלוכה ואימפריות">מלוכה ואימפריות</option><option value="מדע והגות">מדע והגות</option><option value="העת העתיקה">העת העתיקה</option></select></label>
+<label><span>רמת קושי</span><select id="difficultySelect"><option value="all">כל הרמות</option><option value="קל">קל</option><option value="בינוני">בינוני</option><option value="קשה">קשה</option></select></label>
+</div>
+<button id="startGame" class="primary wide">התחל משחק</button><p id="setupMessage" class="setup-message" aria-live="polite"></p>
+</section>
+<section id="game" class="card hidden">
+<div class="topbar"><span>שאלה <strong id="questionNumber">1</strong> מתוך <strong id="totalQuestions">1</strong></span><span>ניקוד: <strong id="score">0</strong></span></div>
+<div class="tags"><span id="typeTag"></span><span id="categoryTag"></span><span id="difficultyTag"></span></div>
+<figure id="portraitFrame" class="portrait-frame"><img id="portrait" alt="דיוקן היסטורי" loading="eager"><figcaption id="sourceCaption" hidden></figcaption></figure>
+<h2 id="questionText"></h2><div id="answers" class="answers"></div><div id="feedback" class="feedback" aria-live="polite"></div>
+<div class="actions"><button id="restart" class="secondary">חזרה לבחירה</button><button id="next" class="primary" disabled>לשאלה הבאה</button></div>
+</section>
+<section id="result" class="card result hidden"><div class="result-icon">🏛️</div><h2>סיימת את המשחק!</h2><p>הניקוד שלך: <strong id="finalScore"></strong> מתוך <strong id="finalTotal"></strong></p><button id="playAgain" class="primary">שחק שוב</button></section>
+<footer>התמונות נבחרו ממאגר Wikimedia Commons ומוצגות בהתאם לתנאי הרישוי המופיעים בדפי המקור.</footer>
+</main>
+<script src="script.js?v=9"></script>
+<script>if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));}</script>
+</body></html>
